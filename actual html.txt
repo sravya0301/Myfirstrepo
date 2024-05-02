@@ -1,0 +1,57 @@
+<div class="glossary-page"
+     data-fgx-glossary-page
+     data-sly-use.model="com.forddirect.aem.brand.model.component.list.Glossary"
+     data-sly-use.context="com.forddirect.aem.brand.wcm.WcmSiteContext"
+     data-sly-set.useBrandDS="${context.make == 'Ford'}"
+     class="glossary-page ${useBrandDS ? 'bri-style' : ''}"
+     aria-label="${model.componentAriaLabel}">
+    <h2 class="glossary-page-headline ${useBrandDS ? 'bri-txt ff-b display-three' : ''} fgx-brand-exlt-h2"
+        data-sly-test="${model.title}"
+        data-sly-element="${model.headlineHTag}">${model.title @context='html'}</h2>
+    <div class="custom-dropdown fgx-brand-print-hide">
+        <div class="mobile-dropdown-display fgx-brand-mobile-container-pad">
+            <span class="selected-option ${useBrandDS ? 'bri-txt ff-b generic-title-one' : ''}">C</span>
+            <span class="dropdown-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M7 6.85107V0H9V6.85107H16V8.85107H9V16H7V8.85107H0V6.85107H7Z" fill="#0068D0"/>
+</svg></span>
+        </div>
+        <ul class="tabbed-list">
+            <sly  data-sly-list.label="${model.sectionLabels}" data-sly-unwrap>
+                <li class="${model.sections[label] ? '' : 'disabled'} ${useBrandDS ? 'bri-txt ff-c generic-title-one' : ''}"
+                    tabindex="${model.sections[label] ? '0' : '-1'}"
+                    role="button"
+                    data-fgx-keypress="true"
+                    data-section="${label @ context='attribute'}">${label}</li>
+            </sly>
+            <li class="hide-on-mobile ${useBrandDS ? 'bri-txt ff-c generic-title-one' : ''}"
+                tabindex="0"
+                role="button"
+                data-fgx-keypress="true">${model.labelSectionAll @context='html'}</li>
+        </ul>
+    </div>
+    <!--/*  NZ: May need to add an extra wrapper div around the content so it can be displayed as part of a data-sly-list
+    depending on how the backend is implemented.*/-->
+    <div class="glossary-content fgx-brand-global-container-pad">
+        <sly data-sly-list.label="${model.sectionLabels}" data-sly-unwrap>
+            <div data-sly-test="${model.sections[label]}" class="glossary-section-content" data-section="${label @ context='attribute'}">
+                <div data-sly-test="model.sections[label]" class="content-heading">
+                    <h2 class="glossary-content-headline ${useBrandDS ? 'bri-txt ff-b title-two' : ''} fgx-brand-exlt-h2"
+                        data-sly-element="${model.subheadlineHTag}">${label @ context='html'}</h2>
+                    <a href="javascript:window.print();"
+                       class="print-icon fgx-brand-print-hide"
+                       data-fd-metrics-click="${model.printClickAction}">
+                        <i class="icon icon-action-print-25px"></i>
+                        <span class="${useBrandDS ? 'bri-txt ff-b body-one' : ''}">${model.labelPrint}</span>
+                    </a>
+                </div>
+                <!--/* NZ: Should be able to use the below 'item' template as part of a data-sly-list once the backend is implemented.*/-->
+                <sly data-sly-list.term="${model.sections[label].terms}">
+                    <div class="item">
+                        <p class="item-heading ${useBrandDS ? 'bri-txt ff-b body-one' : ''}">${term.name @ context='html'}</p>
+                        <div class="item-content ${useBrandDS ? 'bri-txt ff-b body-one' : ''}">${term.detail @ context='html'}</div>
+                    </div>
+                </sly>
+            </div>
+        </sly>
+    </div>
+</div>
